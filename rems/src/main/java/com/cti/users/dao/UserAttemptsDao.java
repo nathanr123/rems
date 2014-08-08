@@ -2,7 +2,7 @@ package com.cti.users.dao;
 
 import com.cti.users.model.UserAttempts;
 
-public interface UserDetailsDao {
+public interface UserAttemptsDao extends DAO{
 
 	void updateFailAttempts(String username);
 

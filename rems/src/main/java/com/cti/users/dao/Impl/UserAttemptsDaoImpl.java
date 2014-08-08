@@ -1,4 +1,4 @@
-package com.cti.users.dao;
+package com.cti.users.dao.Impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +14,13 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Repository;
 
+import com.cti.common.REMS;
+import com.cti.users.dao.UserAttemptsDao;
 import com.cti.users.model.UserAttempts;
 
 @Repository
-public class UserDetailsDaoImpl extends JdbcDaoSupport implements
-		UserDetailsDao {
+public class UserAttemptsDaoImpl extends JdbcDaoSupport implements
+		UserAttemptsDao {
 
 	private static final String SQL_USERS_UPDATE_LOCKED = "UPDATE USERS SET accountNonLocked = ? WHERE username = ?";
 	private static final String SQL_USERS_COUNT = "SELECT count(*) FROM USERS WHERE username = ?";
@@ -114,6 +116,24 @@ public class UserDetailsDaoImpl extends JdbcDaoSupport implements
 		}
 
 		return result;
+	}
+
+	@Override
+	public void save(REMS remsObj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(REMS remsObj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(REMS remsObj) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

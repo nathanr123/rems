@@ -13,13 +13,15 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.cti.common.REMS;
+
 /**
  * @author nathanr_kamal
  *
  */
 @Entity
 @Table(name = "rems_users_grouplist", catalog = "rems_db")
-public class UsersGroupList {
+public class UsersGroupList implements REMS {
 
 	// Variables for corresponding to DB Table
 

@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.cti.common.REMS;
 import com.cti.group.model.UserRole;
 
 @Entity
 @Table(name = "rems_user", catalog = "rems_db")
-public class User {
+public class User implements REMS {
 
 	// Variables for corresponding to DB Table
 
@@ -35,6 +36,8 @@ public class User {
 	private Date modifiedtime;
 
 	private Set<UserRole> userRole;
+
+	private UserDetail userDetail;
 
 	// Constructors
 
@@ -75,6 +78,7 @@ public class User {
 		this.credentialsNonExpired = credentialsNonExpired;
 
 		this.createdtime = createdtime;
+
 		this.modifiedtime = modifiedtime;
 	}
 
@@ -160,6 +164,13 @@ public class User {
 		return userRole;
 	}
 
+	/**
+	 * @return the userDetail
+	 */
+	public UserDetail getUserDetail() {
+		return userDetail;
+	}
+
 	// Setter Methods
 	/**
 	 * @param username
@@ -239,6 +250,14 @@ public class User {
 	 */
 	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
+	}
+
+	/**
+	 * @param userDetail
+	 *            the userDetail to set
+	 */
+	public void setUserDetail(UserDetail userDetail) {
+		this.userDetail = userDetail;
 	}
 
 }
