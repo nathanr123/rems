@@ -118,22 +118,4 @@ public class UserAttemptsDaoImpl extends JdbcDaoSupport implements
 		return result;
 	}
 
-	@Override
-	public void save(REMS remsObj) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(REMS remsObj) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(REMS remsObj) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

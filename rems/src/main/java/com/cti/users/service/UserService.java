@@ -5,57 +5,23 @@ package com.cti.users.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.cti.common.REMS;
-import com.cti.users.dao.UserDAO;
 import com.cti.users.model.User;
-import com.cti.users.model.UserDetail;
 
 /**
  * @author nathanr_kamal
  *
  */
-@Service("UsersService")
-public class UserService implements UserDAO {
 
-	@Autowired
-	UserDAO userDAO;
+public interface UserService {
 
-	@Override
-	public User getUser(String username) {
+	public void saveUser(User user);
 
-		return this.userDAO.getUser(username);
-	}
+	public void updateUser(User user);
 
-	@Override
-	public List<User> getAllUsers() {
+	public void removeUser(String username);
 
-		return this.userDAO.getAllUsers();
-	}
+	public User getUserById(String username);
 
-	@Override
-	public UserDetail getUserDetail(String username) {
+	public List<User> listUsers();
 
-		return this.getUserDetail(username);
-	}
-
-	@Override
-	public void save(REMS remsObj) {
-		this.userDAO.save(remsObj);
-
-	}
-
-	@Override
-	public void update(REMS remsObj) {
-		this.userDAO.update(remsObj);
-
-	}
-
-	@Override
-	public void delete(REMS remsObj) {
-		this.userDAO.delete(remsObj);
-
-	}
 }

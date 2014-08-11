@@ -5,57 +5,60 @@ package com.cti.users.dao.Impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import com.cti.common.REMS;
 import com.cti.users.dao.UserDAO;
 import com.cti.users.model.User;
-import com.cti.users.model.UserDetail;
 import com.cti.util.HibernateDAOEx;
 
 /**
  * @author nathanr_kamal
  *
  */
-@Repository("userDAO")
+@Repository
 public class UserDAOImpl extends HibernateDAOEx implements UserDAO {
 
 	@Override
-	public User getUser(String username) {
-
-		List list = getHibernateTemplate().find("from User where username=?",
-				username);
-		return (User) list.get(0);
-	}
-
-	@Override
-	public List<User> getAllUsers() {
-		List list = getHibernateTemplate().find("from User");
-		return list;
-	}
-
-	@Override
-	public UserDetail getUserDetail(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void save(REMS remsObj) {
-		getHibernateTemplate().save((User) remsObj);
+	public void saveUser(User user) {
+		getHibernateTemplate().save(user);
 
 	}
 
 	@Override
-	public void update(REMS remsObj) {
-		getHibernateTemplate().update((User) remsObj);
+	public void updateUser(User user) {
+		getHibernateTemplate().update(user);
 
 	}
 
 	@Override
-	public void delete(REMS remsObj) {
-		getHibernateTemplate().delete((User) remsObj);
+	public void removeUser(String username) {
+		User user = getHibernateTemplate().load(User.class, username);
 
+		if (null != user) {
+			getHibernateTemplate().delete(user);
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public User getUserById(String username) {
+		Session session = getHibernateTemplate().getSessionFactory()
+				.getCurrentSession();
+
+		List<User> list = session
+				.createQuery("from User b where b.username = :username")
+				.setParameter("username", username).list();
+		return list.size() > 0 ? (User) list.get(0) : null;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> listUsers() {
+		return getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createQuery("from User").list();
 	}
 
 }

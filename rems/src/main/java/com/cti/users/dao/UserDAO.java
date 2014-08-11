@@ -3,13 +3,16 @@ package com.cti.users.dao;
 import java.util.List;
 
 import com.cti.users.model.User;
-import com.cti.users.model.UserDetail;
 
-public interface UserDAO extends DAO {
+public interface UserDAO {
 	
-	User getUser(String username);
+	public void saveUser(User user);
+	
+	public void updateUser(User user);
+	
+	public void removeUser(String username);
+	
+	public User getUserById(String username);
 
-	List<User> getAllUsers();
-	
-	UserDetail getUserDetail(String username);
+	public List<User> listUsers();	
 }

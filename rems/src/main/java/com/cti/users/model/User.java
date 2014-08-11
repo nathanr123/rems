@@ -16,23 +16,32 @@ import com.cti.group.model.UserRole;
 public class User implements REMS {
 
 	// Variables for corresponding to DB Table
-
+	@Id
+	@Column(name = "username", nullable = false, unique = true, length = 16)
 	private String username;
 
+	@Column(name = "password", nullable = false, length = 16)
 	private String password;
 
+	@Column(name = "priority", nullable = false)
 	private int priority;
 
+	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
 
+	@Column(name = "accountNonExpired", nullable = false)
 	private boolean accountNonExpired;
 
+	@Column(name = "accountNonLocked", nullable = false)
 	private boolean accountNonLocked;
 
+	@Column(name = "credentialsNonExpired", nullable = false)
 	private boolean credentialsNonExpired;
 
+	@Column(name = "createdtime", nullable = false)
 	private Date createdtime;
 
+	@Column(name = "modifiedtime", nullable = false)
 	private Date modifiedtime;
 
 	private Set<UserRole> userRole;
@@ -87,8 +96,7 @@ public class User implements REMS {
 	/**
 	 * @return the username
 	 */
-	@Id
-	@Column(name = "username", nullable = false, unique = true, length = 16)
+
 	public String getUsername() {
 		return username;
 	}
@@ -96,7 +104,7 @@ public class User implements REMS {
 	/**
 	 * @return the password
 	 */
-	@Column(name = "password", nullable = false, length = 16)
+
 	public String getPassword() {
 		return password;
 	}
@@ -104,7 +112,7 @@ public class User implements REMS {
 	/**
 	 * @return the priority
 	 */
-	@Column(name = "priority", nullable = false)
+
 	public int getPriority() {
 		return priority;
 	}
@@ -112,7 +120,7 @@ public class User implements REMS {
 	/**
 	 * @return the enabled
 	 */
-	@Column(name = "enabled", nullable = false)
+
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -120,7 +128,7 @@ public class User implements REMS {
 	/**
 	 * @return the accountNonExpired
 	 */
-	@Column(name = "accountNonExpired", nullable = false)
+
 	public boolean isAccountNonExpired() {
 		return accountNonExpired;
 	}
@@ -128,7 +136,7 @@ public class User implements REMS {
 	/**
 	 * @return the accountNonLocked
 	 */
-	@Column(name = "accountNonLocked", nullable = false)
+
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
 	}
@@ -136,7 +144,7 @@ public class User implements REMS {
 	/**
 	 * @return the credentialsNonExpired
 	 */
-	@Column(name = "credentialsNonExpired", nullable = false)
+
 	public boolean isCredentialsNonExpired() {
 		return credentialsNonExpired;
 	}
@@ -144,7 +152,7 @@ public class User implements REMS {
 	/**
 	 * @return the createdtime
 	 */
-	@Column(name = "createdtime", nullable = false)
+
 	public Date getCreatedtime() {
 		return createdtime;
 	}
@@ -152,7 +160,7 @@ public class User implements REMS {
 	/**
 	 * @return the modifiedtime
 	 */
-	@Column(name = "modifiedtime", nullable = false)
+
 	public Date getModifiedtime() {
 		return modifiedtime;
 	}
