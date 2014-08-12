@@ -1,54 +1,121 @@
 package com.cti.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Properties;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-@EnableWebMvc
 @Configuration
+@EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan({ "com.cti.*" })
+@PropertySource("classpath:application.properties")
 @Import({ SecurityConfig.class })
 public class AppConfig {
 
-	@Autowired
+	// Database Configuration
+	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
+
+	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
+
+	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+
+	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
+
+	// Hibernate Configuration
+	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
+
+	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+
+	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "com.cti.model";
+
+	@Resource
 	private Environment env;
 
-	@Bean(name = "dataSource")
-	public DriverManagerDataSource dataSource() {
+	@Bean
+	public DataSource dataSource() {
 
-		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setDriverClassName(env
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
 
-		driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/rems_db");
+		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
 
-		driverManagerDataSource.setUsername("root");
+		dataSource.setUsername(env
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
 
-		driverManagerDataSource.setPassword("cornet");
+		dataSource.setPassword(env
+				.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
 
-		return driverManagerDataSource;
+		return dataSource;
 	}
 
 	@Bean
-	public InternalResourceViewResolver viewResolver() {
+	public LocalSessionFactoryBean sessionFactory() {
 
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+		LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
 
-		viewResolver.setViewClass(JstlView.class);
+		sessionFactoryBean.setDataSource(dataSource());
 
-		viewResolver.setPrefix("/WEB-INF/pages/");
+		sessionFactoryBean
+				.setPackagesToScan(env
+						.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
 
-		viewResolver.setSuffix(".jsp");
+		sessionFactoryBean.setHibernateProperties(hibProperties());
 
-		return viewResolver;
+		return sessionFactoryBean;
 	}
-	
-	
+
+	private Properties hibProperties() {
+
+		Properties properties = new Properties();
+
+		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,
+				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
+
+		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL,
+				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+
+		return properties;
+	}
+
+	@Bean
+	public HibernateTransactionManager transactionManager() {
+
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+
+		transactionManager.setSessionFactory(sessionFactory().getObject());
+
+		return transactionManager;
+	}
+
+	@Bean
+	public UrlBasedViewResolver setupViewResolver() {
+
+		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+
+		resolver.setPrefix("/WEB-INF/pages/");
+
+		resolver.setSuffix(".jsp");
+
+		resolver.setViewClass(JstlView.class);
+
+		return resolver;
+	}
+
 }

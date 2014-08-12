@@ -1,8 +1,8 @@
-package com.cti.users.dao;
+package com.cti.dao;
 
 import java.util.List;
 
-import com.cti.users.model.User;
+import com.cti.model.User;
 
 public interface UserDAO {
 	

@@ -1,6 +1,7 @@
-package com.cti.users.model;
+package com.cti.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,11 +11,9 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.cti.group.model.UserRole;
-
 @Entity
 @Table(name = "rems_user", catalog = "rems_db")
-public class User{
+public class User {
 
 	// Variables for corresponding to DB Table
 	@Id
@@ -45,11 +44,11 @@ public class User{
 	@Column(name = "modifiedtime", nullable = false)
 	private Date modifiedtime;
 
-	private Set<UserRole> userRole;
+	private List<UserRole> userRole;
 
 	private UserDetail userDetail;
-	
-	 private Set<GrantedAuthority> authorities;
+
+	private Set<GrantedAuthority> authorities;
 
 	// Constructors
 
@@ -169,13 +168,6 @@ public class User{
 	}
 
 	/**
-	 * @return the userRole
-	 */
-	public Set<UserRole> getUserRole() {
-		return userRole;
-	}
-
-	/**
 	 * @return the userDetail
 	 */
 	public UserDetail getUserDetail() {
@@ -256,14 +248,6 @@ public class User{
 	}
 
 	/**
-	 * @param userRole
-	 *            the userRole to set
-	 */
-	public void setUserRole(Set<UserRole> userRole) {
-		this.userRole = userRole;
-	}
-
-	/**
 	 * @param userDetail
 	 *            the userDetail to set
 	 */
@@ -279,11 +263,25 @@ public class User{
 	}
 
 	/**
-	 * @param authorities the authorities to set
+	 * @param authorities
+	 *            the authorities to set
 	 */
 	public void setAuthorities(Set<GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
 
-	
+	/**
+	 * @return the userRole
+	 */
+	public List<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	/**
+	 * @param userRole
+	 *            the userRole to set
+	 */
+	public void setUserRole(List<UserRole> userRole) {
+		this.userRole = userRole;
+	}
 }

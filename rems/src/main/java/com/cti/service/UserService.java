@@ -1,11 +1,11 @@
 /**
  * 
  */
-package com.cti.users.service;
+package com.cti.service;
 
 import java.util.List;
 
-import com.cti.users.model.User;
+import com.cti.model.User;
 
 /**
  * @author nathanr_kamal
