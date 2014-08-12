@@ -8,12 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.cti.common.REMS;
+import org.springframework.security.core.GrantedAuthority;
+
 import com.cti.group.model.UserRole;
 
 @Entity
 @Table(name = "rems_user", catalog = "rems_db")
-public class User implements REMS {
+public class User{
 
 	// Variables for corresponding to DB Table
 	@Id
@@ -47,6 +48,8 @@ public class User implements REMS {
 	private Set<UserRole> userRole;
 
 	private UserDetail userDetail;
+	
+	 private Set<GrantedAuthority> authorities;
 
 	// Constructors
 
@@ -268,4 +271,19 @@ public class User implements REMS {
 		this.userDetail = userDetail;
 	}
 
+	/**
+	 * @return the authorities
+	 */
+	public Set<GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+
+	/**
+	 * @param authorities the authorities to set
+	 */
+	public void setAuthorities(Set<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
+
+	
 }

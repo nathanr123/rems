@@ -11,11 +11,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.cti.common.REMS;
-
 @Entity
 @Table(name = "rems_user_detail", catalog = "rems_db")
-public class UserDetail implements REMS {
+public class UserDetail{
 
 	// Variables for corresponding to DB Table
 

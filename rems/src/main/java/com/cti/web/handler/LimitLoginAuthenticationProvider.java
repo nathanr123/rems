@@ -10,14 +10,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import com.cti.users.dao.UserAttemptsDao;
+import com.cti.users.dao.UserAttemptsDAO;
 import com.cti.users.model.UserAttempts;
 
 @Component("authenticationProvider")
 public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider {
 
 	@Autowired
-	UserAttemptsDao userAttemptsDao;
+	UserAttemptsDAO userAttemptsDAO;
 	
 	@Autowired
 	@Qualifier("userAttemptsService")
@@ -35,21 +35,21 @@ public class LimitLoginAuthenticationProvider extends DaoAuthenticationProvider 
 			
 			//if reach here, means login success, else exception will be thrown
 			//reset the user_attempts
-			userAttemptsDao.resetFailAttempts(authentication.getName());
+			userAttemptsDAO.resetFailAttempts(authentication.getName());
 			
 			return auth;
 			
 		} catch (BadCredentialsException e) {	
 			
 			//invalid login, update to user_attempts
-			userAttemptsDao.updateFailAttempts(authentication.getName());
+			userAttemptsDAO.updateFailAttempts(authentication.getName());
 			throw e;
 			
 		} catch (LockedException e){
 			
 			//this user is locked!
 			String error = "";
-			UserAttempts userAttempts = userAttemptsDao.getUserAttempts(authentication.getName());
+			UserAttempts userAttempts = userAttemptsDAO.getUserAttempts(authentication.getName());
 			if(userAttempts!=null){				
 				error = "User account is locked! <br><br>Username : " + authentication.getName() + "<br>Last Attempts : " + userAttempts.getModifiedtime();
 			}else{
